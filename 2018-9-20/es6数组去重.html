@@ -8,11 +8,22 @@
 <body>
 
     <script>
-    
-        let arr = new set([1,1,2,2,3,3,4,4])
-        let arr1 = [...arr]   
 
-    
+        //原数组
+        let arr = [1,1,2,2,3,3,4,4]
+
+        //方法1
+        let setArr = new Set( arr )
+        let resultArr = [...setArr]   
+
+        //方法2
+        let resultArr2 = arr.filter( (item,index,self) =>{
+            return self.indexOf(item) == index
+        })
+        
+        console.log( resultArr )    
+        console.log( resultArr2 )    
+
     </script>
     
 </body>
