@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #b_box {
+            width: 200px;
+            height: 200px;
+            border: 3px solid black;
+            border-radius: 200px;
+            position: absolute;
+            left: 600px;
+            top: 200px;
+        }
+
+        #s_box {
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 10px;
+            position: absolute;
+            left: 800px;
+            top: 300px;
+        }
+    </style>
+
+    <div id="b_box"></div>
+    <div id="s_box"></div>
+
+    <script>
+
+        let s_box = document.querySelector('#s_box')
+        let [x,y,r,angle] = [700,300,100,0]
+        setInterval( () =>{
+            angle++
+            let a = Math.sin(angle * Math.PI / 180) * r   //求对边的长度
+            let b = Math.cos(angle * Math.PI / 180) * r   //求临边的长度
+            s_box.style.left = -a + x + 'px'
+            s_box.style.top = b + y + 'px'
+        }, 50)
+
+    </script>
+</body>
+
+</html>
