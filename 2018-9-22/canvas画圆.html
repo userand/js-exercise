@@ -23,19 +23,15 @@
 
     <script>
         //角度转弧度
-        let angleTransArc = angle => {
-            return angle * Math.PI / 180
-        }
+        let angleTransArc = angle => angle * Math.PI / 180
 
         //弧度转角度
-        let arctTransAngle = arc => {
-            return arc * 180 / Math.PI
-        }
+        let arctTransAngle = arc => arc * 180 / Math.PI
 
         let box = document.querySelector('#box')
         let gd = box.getContext('2d')
         //arc(x,y,r,startAnle,endAnle,dir)
-        
+
         let [x,y,r,startAngle,endAngle] = [200,200,100,angleTransArc(0),angleTransArc(360)]
         
         let drawArc = ()=>{
