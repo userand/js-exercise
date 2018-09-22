@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background: #000;
+            text-align: center;
+        }
+
+        #box {
+            background: #fff;
+        }
+    </style>
+
+    <canvas id="box" width="500" height="500"></canvas>
+
+    <script>
+
+        let canvas = document.querySelector('#box');
+        let gd = canvas.getContext('2d');
+
+        //划线操作前必须先beginPath
+        gd.strokeStyle = 'red'
+        //起点坐标
+        gd.moveTo(0, 0)
+        //结束点坐标
+        gd.lineTo(100, 100)
+        //给线填充颜色
+        gd.stroke()
+
+        gd.beginPath()
+        gd.strokeStyle = 'yellow'
+        gd.moveTo(0, 0)
+        gd.lineTo(400, 100)
+        gd.stroke()
+        gd.beginPath()
+
+        gd.strokeStyle = 'blue'
+        gd.moveTo(0, 0)
+        gd.lineTo(300, 100)
+        gd.stroke()
+        gd.beginPath()
+
+        gd.strokeStyle = 'pink'
+        gd.moveTo(0, 0)
+        gd.lineTo(200, 100)
+        gd.stroke()
+        gd.beginPath()
+
+        gd.closePath()
+
+        //画矩形
+
+        //第一种方式
+        gd.rect(400, 0, 100, 100)
+        gd.fill()
+
+        //第二种方式
+        gd.fillStyle = 'red'
+        gd.fillRect(100, 200, 100, 100)     //fillRect(x, y, width, height)  实心的矩形
+        gd.strokeRect(200, 300, 100, 100)   //strockRect(x, y, width, height)  边框的矩形
+        gd.fillRect(300, 200, 100, 100)
+        gd.fillRect(100, 400, 100, 100)
+        gd.fillRect(300, 400, 100, 100)
+
+    </script>
+
+
+</body>
+
+</html>
