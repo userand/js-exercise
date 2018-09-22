@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+            background: #000;
+            text-align: center;
+        }
+
+        #box {
+            background: #fff;
+        }
+    </style>
+    <canvas id="box" width="500" height="500"></canvas>
+    <script>
+        class Arrow {
+            constructor() {
+                this.x = 0;
+                this.y = 0;
+                this.color = 'red'
+                this.rotation = 0
+            }
+            draw(context) {
+                context.save()
+                context.translate(this.x, this.y)
+                context.rotate(this.rotation)
+                context.lineWidth = 2
+                context.fillStyle = this.color
+                context.beginPath()
+                context.moveTo(-50, -25)
+                context.lineTo(0, -25)
+                context.lineTo(0, -50)
+                context.lineTo(50, 0)
+                context.lineTo(0, 50)
+                context.lineTo(0, 25)
+                context.lineTo(-50, 25)
+                context.lineTo(-50, 25)
+                context.lineTo(-50, -25)
+                context.closePath()
+                context.fill()
+                context.stroke()
+                context.restore()
+            }
+            captureMouse(element) {
+                let mouse = { x: 0, y: 0, event: null },
+                    body_scrollLeft = document.body.scrollLeft,
+                    element_scrollLeft = document.documentElement.scrollLeft,
+                    body_scrollTop = document.body.scrollTop,
+                    element_scrollTop = document.documentElement.scrollTop,
+                    offsetLeft = element.offsetLeft,
+                    offsetTop = element.offsetTop;
+
+                element.addEventListener('mousemove', function (event) {
+                    let x, y;
+                    if (event.pageX || event.pageY) {
+                        x = event.pageX;
+                        y = event.pageY;
+                    } else {
+                        x = event.clientX + body_scrollLeft + element_scrollLeft;
+                        y = event.clientY + body_scrollTop + element_scrollTop;
+                    }
+                    x -= offsetLeft;
+                    y -= offsetTop;
+                    mouse.x = x;
+                    mouse.y = y;
+                    mouse.event = event;
+                }, false);
+                return mouse;
+            }
+        }
+        let box = document.querySelector('#box')
+        let gd = box.getContext('2d')
+        let arrow = new Arrow()
+        let mouse = arrow.captureMouse(box)
+        arrow.x = box.width / 2
+        arrow.y = box.height / 2
+        let drawFrame = () => {
+            arrow.draw(gd)
+            window.requestAnimationFrame(drawFrame, box)
+            box.addEventListener('mousemove',event=>{
+                gd.clearRect(0, 0, box.width, box.height)
+                let dx = event.offsetX - arrow.x;
+                let dy = event.offsetY - arrow.y;
+                arrow.rotation = Math.atan2(dy, dx) //atan2返回不同 (x,y) 点的角度
+            })
+        }
+        drawFrame()
+    </script>
+
+</body>
+
+</html>
