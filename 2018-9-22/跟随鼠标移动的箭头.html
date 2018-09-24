@@ -86,9 +86,12 @@
             window.requestAnimationFrame(drawFrame, box)
             box.addEventListener('mousemove',event=>{
                 gd.clearRect(0, 0, box.width, box.height)
+
                 let dx = event.offsetX - arrow.x;
                 let dy = event.offsetY - arrow.y;
                 arrow.rotation = Math.atan2(dy, dx) //atan2返回不同 (x,y) 点的角度
+
+                console.log(event.offsetX +'====' +  event.offsetY +'===='+arrow.x +"====="+arrow.y +'====='+  Math.atan2(dy, dx) +'====' +  Math.atan2(dy, dx) *180/Math.PI )
             })
         }
         drawFrame()

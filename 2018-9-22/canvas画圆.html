@@ -32,7 +32,7 @@
         let gd = box.getContext('2d')
         //arc(x,y,r,startAnle,endAnle,dir)
 
-        let [x,y,r,startAngle,endAngle] = [200,200,100,angleTransArc(0),angleTransArc(360)]
+        let [x,y,r,startAngle,endAngle] = [box.width/2,box.height/2,100,angleTransArc(0),angleTransArc(360)]
         
         let drawArc = ()=>{
             gd.beginPath()
@@ -43,14 +43,18 @@
         box.addEventListener('mousemove',event=>{
             let [mx,my] = [event.offsetX,event.offsetY ];
             let dis = Math.sqrt( Math.pow(mx-x,2)+ Math.pow(my-y,2) )
+
+            console.log( mx +'===' +(mx-x) +'=='+ my +'=='+ (my-y) +'=='+Math.sqrt( Math.pow(mx-x,2)+ Math.pow(my-y,2) ) )    
+
             gd.clearRect(0,0,box.width,box.height)
             if( dis<r ){
                 gd.strokeStyle='red'
+               
             }else{
                 gd.strokeStyle='black'
             }
             drawArc()
-            console.log(mx+'=='+my) 
+           // console.log(mx+'=='+my) 
         })
 
     </script>

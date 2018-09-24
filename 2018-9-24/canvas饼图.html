@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background: #000;
+            text-align: center;
+        }
+
+        #box {
+            background: #fff;
+        }
+    </style>
+    <canvas id="box" width="500" height="500"></canvas>
+    <script>
+
+        class Pie {
+            constructor() {
+                this.box = document.querySelector('#box')
+                this.gd = box.getContext('2d')
+                this.cx = box.width / 2
+                this.cy = box.height / 2
+                this.r = 100
+                this.startAngle = 30
+                this.endAngle = 80
+                this.data = [
+                        { data: 300, color: 'pink' }, 
+                        { data: 200, color: '#09f' }, 
+                        { data: 20, color: '#f60' },
+                        { data: 100, color: '#ccc' },
+                        { data: 100, color: '#000' }
+                    ]
+            }
+            angleTorad(ang){
+                return  ang * Math.PI / 180
+            }
+            draw(startAngle, endAngle, color) {
+                //计算lineTo到的点`
+                let x = this.cx + Math.cos(this.angleTorad(startAngle)) * this.r
+                let y = this.cy + Math.sin(this.angleTorad(startAngle)) * this.r
+                this.gd.beginPath()
+                //划线
+                this.gd.moveTo(this.cx, this.cy)
+                this.gd.lineTo(this.x, this.y)
+                //画弧
+                this.gd.arc(this.cx, this.cy, this.r,this.angleTorad(startAngle), this.angleTorad(endAngle), false)
+                this.gd.closePath()
+                this.gd.fillStyle = color
+                this.gd.fill()
+            }
+            draw2() {
+                let sum = 0;
+                this.data.forEach(item => {
+                    sum += item.data
+                })
+                let now = 0;
+                this.data.forEach(data => {
+                    let ang = 360 * data.data / sum
+                    this.draw(now, now + ang, data.color)
+                    now += ang
+                })
+            }
+        }
+        
+        let pie = new Pie();
+        pie.draw2()
+
+        // let box = document.querySelector('#box')
+        // let gd = box.getContext('2d')
+        // let [cx, cy, r, startAngle, endAngle] = [box.width / 2, box.height / 2, 100, 30, 80]
+        // let data = [{ data: 300, color: 'pink' }, { data: 200, color: '#09f' }, { data: 20, color: '#f60' }]
+        // let angleTorad = ang => ang * Math.PI / 180
+        // let pie = (startAngle, endAngle, color) => {
+        //     //计算lineTo到的点
+        //     let x = cx + Math.cos(angleTorad(startAngle)) * r
+        //     let y = cy + Math.sin(angleTorad(startAngle)) * r
+        //     gd.beginPath()
+        //     //划线
+        //     gd.moveTo(cx, cy)
+        //     gd.lineTo(x, y)
+        //     //画弧
+        //     gd.arc(cx, cy, r, angleTorad(startAngle), angleTorad(endAngle), false)
+        //     gd.closePath()
+        //     gd.fillStyle = color
+        //     gd.fill()
+        // }
+        // let sum = 0;
+        // data.forEach(item => {
+        //     sum += item.data
+        // })
+        // let now = 0;
+        // data.forEach(data => {
+        //     let ang = 360 * data.data / sum
+        //     pie(now, now + ang, data.color)
+        //     now += ang
+        // })
+
+    </script>
+
+</body>
+
+</html>

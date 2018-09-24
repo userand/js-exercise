@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background: #000;
+            text-align: center;
+        }
+
+        #box {
+            background: #fff;
+        }
+    </style>
+
+    <canvas id="box" width="500" height="500"></canvas>
+    <script>
+        let box = document.querySelector('#box')
+        let gd = box.getContext('2d')
+        let oImg = new Image()
+        oImg.src = '1.jpg'
+        oImg.onload = () => {
+            gd.drawImage(oImg, 350, 200, 100, 100, box.width / 2 - 50, box.height / 2 - 50, 100, 100);
+        }
+    </script>
+
+</body>
+
+</html>
