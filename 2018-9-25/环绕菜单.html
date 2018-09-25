@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        #menu {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        #menu_list {
+            height: 42px;
+            width: 42px;
+            position: relative;
+            margin: 4px;
+        }
+
+        #menu_list img {
+            border-radius: 21px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 21px;
+        }
+
+        #home {
+            width: 50px;
+            height: 50px;
+            background: url(img/home.png) no-repeat;
+            border-radius: 25px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: 1s
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="menu">
+        <div id="menu_list">
+            <img src="img/prev.png" alt="" />
+            <img src="img/open.png" alt="" />
+            <img src="img/clos.png" alt="" />
+            <img src="img/full.png" alt="" />
+            <img src="img/refresh.png" alt="" />
+        </div>
+        <div id="home"></div>
+    </div>
+
+    <script>
+
+        let btn = document.querySelector('#home');
+        let list = document.querySelector('#menu_list');
+        let oImg = list.getElementsByTagName('img');
+        let btnOff = true
+        let mum = 0
+        let r = -150;
+
+        let angToRad = ang => ang * Math.PI / 180
+
+
+        let addEnd = (obj, fn) => {
+            obj.addEventListener('transitionend', fn, false)
+        }
+
+        let removeEnd = (obj, fn) => {
+            obj.removeEventListener('transitionend', fn, false)
+        }
+
+        let end = () => {
+            this.event.target.style.transform = 'scale(1)'
+            this.event.target.style.transition = '0.1s '
+            this.event.target.style.opacity = '1'
+            removeEnd(this, this)
+        }
+
+        for (let i = 0; i < oImg.length; i++) {
+            oImg[i].addEventListener('click', (event) => {
+                let me = this;
+                this.event.target.style.transform = 'scale(2)'
+                this.event.target.style.transition = '0.5s '
+                this.event.target.style.opacity = '0.3'
+                addEnd(this, end)
+
+            })
+        }
+
+        let getxy = (radius, ang) => {
+            return {
+                x: Math.round(Math.sin(angToRad(ang)) * radius),
+                y: Math.round(Math.cos(angToRad(ang)) * radius)
+            }
+        }
+        
+        btn.addEventListener('click', event => {
+            if (btnOff) {
+                this.event.target.style.transform = 'rotate(-360deg)'
+                for (let i = 0; i < oImg.length; i++) {
+                    let angle = 90 / 4 * i;
+                    let l = getxy(r, angle).x
+                    let t = getxy(r, angle).y
+                    oImg[i].style.transition = "0.5s " + i * 50 + "ms"
+                    oImg[i].style.transform = 'rotate(-360deg)'
+                    oImg[i].style.left = l + 'px'
+                    oImg[i].style.top = t + 'px'
+                }
+            } else {
+                this.event.target.style.transform = 'rotate(0deg)'
+                for (let i = 0; i < oImg.length; i++) {
+                    oImg[i].style.transition = "0.5s " + (oImg.length - i - 1) * 50 + "ms"
+                    oImg[i].style.transform = 'rotate(0deg)'
+                    oImg[i].style.left = 0 + 'px'
+                    oImg[i].style.top = 0 + 'px'
+                }
+            }
+            btnOff = !btnOff
+        })
+
+
+    </script>
+
+</body>
+
+</html>
