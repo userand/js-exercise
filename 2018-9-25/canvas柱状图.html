@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background: #000;
+            text-align: center;
+        }
+
+        #box {
+            background: #fff;
+        }
+    </style>
+    <canvas id="box" width="600" height="500"></canvas>
+    <script>
+
+        let box = document.querySelector('#box')
+        let gd = box.getContext('2d')
+
+        gd.beginPath()
+        gd.moveTo(50, 30)
+        gd.lineTo(50, 450)
+        gd.stroke()
+
+        gd.beginPath()
+        gd.moveTo(50, 450)
+        gd.lineTo(580, 450)
+        gd.stroke()
+
+        for (let i = 0; i < 10; i++) {
+            gd.beginPath()
+            gd.moveTo(50, 50 + i * 40)
+            gd.lineTo(550, 50 + i * 40)
+            gd.stroke()
+        }
+
+        for (let i = 0; i < 12; i++) {
+            if(i<10){
+                gd.beginPath()
+                gd.fillText( (i+1)*60, 20, 80 + i * 40)
+                gd.stroke()
+            }
+            gd.beginPath()
+            gd.fillText(i + 1 + '月', 50 + i * 40, 470)
+            gd.stroke()
+
+            gd.beginPath()
+            gd.fillStyle='#f60'
+            
+            gd.fillRect( 50 + i * 40, 450-( (i+1)*30), 20,(i+1)*30 )
+          
+        }
+
+        
+        
+    </script>
+
+</body>
+
+</html>

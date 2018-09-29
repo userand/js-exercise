@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="movestarbox"></div>
+</body>
+
+<script>
+
+    let box = document.querySelector('.movestarbox')
+    let star = document.querySelectorAll('.movestarbox > i')
+    let str = ''
+
+    let createRandom = (start, end) => {
+        let dis = end - start + 1
+        return Math.floor(Math.random() * dis + start)
+    }
+
+    for (let i = 0; i < 20; i++) {
+        str += `<i class="movestar" 
+                    style=" left:${createRandom(1, 1000)}px;
+                    top:-${createRandom(1, 500)}px;
+                    width:${createRandom(1, 50)}px; 
+                    animation:movestar ${createRandom(1, 8)}s linear infinite ">
+                </i>`
+    }
+    
+    box.innerHTML = str
+
+</script>
+
+<style>
+    .movestarbox {
+        background: #563761;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 90
+    }
+
+    .movestar {
+        display: block;
+        position: absolute;
+        width: 400px;
+        height: 1px;
+        background: -webkit-linear-gradient(0deg, transparent, #fff);
+        -webkit-animation: movestar 2s linear infinite;
+        animation: movestar 2s linear infinite
+    }
+
+    @keyframes movestar {
+        0% {
+            opacity: 0;
+            -webkit-transform: rotate(40deg) translateX(0) scale(.5);
+            transform: rotate(40deg) translateX(0) scale(.5)
+        }
+
+        20% {
+            opacity: .2
+        }
+
+        80% {
+            opacity: .4
+        }
+
+        to {
+            opacity: 0;
+            -webkit-transform: rotate(40deg) translateX(1000px) scale(2);
+            transform: rotate(40deg) translateX(1000px) scale(2)
+        }
+    }
+</style>
+
+</html>

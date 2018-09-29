@@ -1,62 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-    
+
     <style>
-    *{
-        margin: 0;
-        padding: 0
-    }
-    #box{
-        width: 100px;
-        height: 100px;
-        background: red;
-        position: absolute;
-    }
-    
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background: green;
+            position: absolute;
+        }
+
+        #box2 {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 500px;
+            top: 300px;
+
+        }
     </style>
 
     <div id="box"></div>
+    <div id="box2"></div>
 
 
     <script>
-    
-        let box = document.querySelector('#box')
-        let x,y,dx,dy,
-        
-        
-        isDown=false    
 
-        box.addEventListener('mousedown',event=>{
-            let [left,top] = [box.offsetLeft,box.offsetTop]
-             x = event.clientX
-             y=event.clientY
-             dx = x- left
-             dy = x - top
-             isDown = true
+        let box = document.querySelector('#box')
+        let box2 = document.querySelector('#box2')
+        let x, y, dx, dy;
+
+        isDown = false
+
+        box.addEventListener('mousedown', event => {
+            let [left, top] = [box.offsetLeft, box.offsetTop]
+            x = event.clientX
+            y = event.clientY
+            dx = x - left
+            dy = x - top
+            isDown = true
         })
 
-        document.addEventListener('mousemove',event=>{
-            if(!isDown) return false
-            let [mx,my] = [event.clientX,event.clientY];
+        document.addEventListener('mousemove', event => {
+            if (!isDown) return false
+            let [mx, my] = [event.clientX, event.clientY];
             let l = mx - dx
             let t = my - dy
-            box.style.left = l +'px'
-            box.style.top = t +'px'
+            let winW = document.documentElement.clientWidth || document.body.clientWidth
+            let WinH = document.documentElement.clientHeight || document.body.clientHeight
+
+            let l1 = box.offsetLeft;
+            let t1 = box.offsetTop;
+            let r1 = box.offsetLeft + box.offsetWidth
+            let b1 = box.offsetTop + box.offsetHeight
+
+            let l2 = box2.offsetLeft;
+            let t2 = box2.offsetTop;
+            let r2 = box2.offsetLeft + box.offsetWidth;
+            let b2 = box2.offsetTop + box.offsetHeight;
+
+            //九宫格碰撞检测法
+            if (b1 < t2 || t1 > b2 || r1 < l2 || l1 > r2) {
+                box2.innerHTML = ''
+            } else {
+
+                box2.innerHTML = '碰上了'
+            }
+                
+         for (var i = 0; i < boxs.length; i++) {
+            // console.log(boxs[i])
+            region(box, boxs[i],function(){
+                console.log(boxs[i])
+            })
+        }
+
+            if (l > winW - box.offsetWidth) {
+                l = winW - box.offsetWidth
+            } else if (l < 0) {
+                l = 0
+            }
+
+            if (t < 0) {
+                t = 0
+            } else if (t > WinH - box.offsetHeight) {
+                t = WinH - box.offsetHeight
+            }
+            box.style.left = l + 'px'
+            box.style.top = t + 'px'
         })
 
-        document.addEventListener('mouseup',event=>{
+        document.addEventListener('mouseup', event => {
             isDown = false
-         })
-    
+        })
+        
+        //碰撞检测
+        function region(source,target,cb){
+            let l1 = source.offsetLeft;
+            let t1 = source.offsetTop;
+            let r1 = source.offsetLeft + source.offsetWidth;
+            let b1 = source.offsetTop + source.offsetHeight;
+            let l2 = target.offsetLeft;
+            let t2 = target.offsetTop;
+            let r2 = target.offsetLeft + target.offsetWidth;
+            let b2 = target.offsetTop + target.offsetHeight;
+            //九宫格碰撞检测法
+            if (b1 < t2 || t1 > b2 || r1 < l2 || l1 > r2) {
+                box2.innerHTML = ''
+            } else {
+                box2.innerHTML = '碰上了'
+                cb()
+            }
+        }
+
+        function fishaa() {
+            let oDiv = document.createElement('div');
+            oDiv.className = 'box'
+            var str = '';
+            for (var i = 0; i < 10; i++) {
+                str += '<div class="fish"></div>'
+            }
+            oDiv.innerHTML = str;
+            document.body.appendChild(oDiv)
+        }
+
+        fishaa()
+
+
+        let boxs = document.querySelectorAll('.box > .fish');
+       
+        var speed =0;
+        setInterval(function(){
+            for (var i = 0; i < boxs.length; i++) {
+            // console.log(boxs[i])
+                speed+=5
+                boxs[i].style.position = 'absolute'
+                boxs[i].style.left =  Math.random() *100*i+ 'px'
+                boxs[i].style.top =  speed+ 'px'
+                if(speed>document.documentElement.clientHeight){
+                   speed = document.documentElement.clientHeight-10;
+                    document.querySelector('.box').removeChild( boxs[i] )
+                   
+                }
+
+               
+        }
+
+      
+        },1000)
+
     </script>
 
+    <style>
+        *{
+            margin: 0;
+            padding: 0
+        }
+        .fish {
+            width: 10px;
+            height: 10px;
+            background: red;
+
+        }
+    </style>
 
 </body>
+
 </html>
